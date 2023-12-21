@@ -1,1 +1,1 @@
-rootProject.name = "Thunder"
+rootProject.name = "homeThunder"

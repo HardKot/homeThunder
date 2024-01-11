@@ -1,6 +1,6 @@
 'use server'
 
-const SendRegistrationForm = async (data) => {
+const SendRegistrationForm = async (data: FormData) => {
   console.log("arguments", data)
 }
 

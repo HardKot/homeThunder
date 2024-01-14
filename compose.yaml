@@ -4,15 +4,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
-  root:
-    build: .
-    ports:
-      - "8080:8080"
-    links:
-      - database
+      - POSTGRES_DB=mydatabase
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_USER=myuser
   www:
     build: www
     ports:

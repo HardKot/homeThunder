@@ -1,7 +1,7 @@
-package com.homeThunder.repository.baseEntity
+package com.homeThunder.database.baseEntity
 
-import com.homeThunder.repository.columns.createAt
-import com.homeThunder.repository.columns.updateAt
+import com.homeThunder.database.columns.createAt
+import com.homeThunder.database.columns.updateAt
 import org.jetbrains.exposed.dao.id.UUIDTable
 
 abstract class BaseEntityTable(name: String) : UUIDTable(name) {

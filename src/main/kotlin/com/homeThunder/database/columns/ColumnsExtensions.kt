@@ -1,4 +1,4 @@
-package com.homeThunder.repository.columns
+package com.homeThunder.database.columns
 
 import com.homeThunder.data.enums.Gender
 import com.homeThunder.extensions.now

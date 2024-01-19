@@ -1,7 +1,7 @@
-package com.homeThunder.repository.tables
+package com.homeThunder.database.tables
 
-import com.homeThunder.repository.baseEntity.BaseEntityTable
-import com.homeThunder.repository.columns.gender
+import com.homeThunder.database.baseEntity.BaseEntityTable
+import com.homeThunder.database.columns.gender
 
 import org.jetbrains.exposed.sql.kotlin.datetime.date
 

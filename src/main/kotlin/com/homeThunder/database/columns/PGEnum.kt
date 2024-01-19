@@ -1,4 +1,4 @@
-package com.homeThunder.repository.columns
+package com.homeThunder.database.columns
 
 import org.postgresql.util.PGobject
 

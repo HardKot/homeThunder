@@ -1,4 +1,4 @@
-package com.homeThunder.repository.tables
+package com.homeThunder.database.tables
 
 import org.jetbrains.exposed.sql.Table
 

@@ -1,4 +1,4 @@
-package com.homeThunder.repository.baseEntity
+package com.homeThunder.database.baseEntity
 
 import com.homeThunder.extensions.now
 import kotlinx.datetime.LocalDateTime

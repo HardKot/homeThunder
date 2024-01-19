@@ -1,4 +1,4 @@
-package com.homeThunder.repository.baseEntity
+package com.homeThunder.database.baseEntity
 
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.id.EntityID

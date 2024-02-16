@@ -1,70 +1,91 @@
-val ktor_version: String by project
-val kotlin_version: String by project
-val logback_version: String by project
-val exposed_version: String by project
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.21"
-    kotlin("plugin.serialization") version "1.9.21"
+    id("org.springframework.boot") version "3.2.2"
+    id("io.spring.dependency-management") version "1.1.4"
 
-    id("io.ktor.plugin") version "2.3.7"
-    id("org.flywaydb.flyway") version "10.4.0"
+    kotlin("jvm") version "1.9.22"
+    kotlin("plugin.spring") version "1.9.22"
+    kotlin("plugin.jpa") version "1.9.22"
 
-    kotlin("kapt") version "1.9.22"
+    id("com.vaadin") version "20.0.0"
+
 }
 
-group = "com.homeThunder"
-version = "0.0.1"
+group = "org.homethunder"
+version = "0.0.1-SNAPSHOT"
 
-application {
-    mainClass.set("io.ktor.server.jetty.EngineMain")
-
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
     mavenCentral()
+//    maven { url = "https://maven.vaadin.com/vaadin-addons" }
 }
+//
+//vaadin {
+//    optimizeBundle = false
+//}
+
 
 dependencies {
-    implementation("com.google.dagger:dagger:2.50")
-    kapt("com.google.dagger:dagger-compiler:2.50")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    val exposedVersion = "0.46.0"
 
-    implementation("io.ktor:ktor-server-core-jvm")
-    implementation("io.ktor:ktor-server-netty-jvm")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
-    implementation("io.ktor:ktor-server-config-yaml:2.3.7")
-    implementation("io.ktor:ktor-server-request-validation:$ktor_version")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-    implementation("at.favre.lib:bcrypt:0.10.2")
+    implementation("com.github.mvysny.karibudsl:karibu-dsl:2.1.2")
+    api("com.github.mvysny.karibu-tools:karibu-tools:0.19")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
+    implementation("com.vaadin:vaadin-core:24.3.3")
 
+//    implementation("org.springframework.boot:spring-boot-starter-data-rest")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+
+    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-crypt:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+
+    implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-json:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-spring-boot-starter:$exposedVersion")
+
+    implementation("org.flywaydb:flyway-core")
+
+
+    implementation("com.vaadin:vaadin-spring-boot-starter")
+    compileOnly("org.springframework.boot:spring-boot-devtools")
     implementation("io.konform:konform-jvm:0.4.0")
 
-    implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
-    implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
-    implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposed_version")
-    implementation("org.jetbrains.exposed:exposed-json:$exposed_version")
+    implementation("org.postgresql:postgresql:42.7.1")
 
-    implementation("org.postgresql:postgresql:42.6.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-    testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+//    implementation(kotlin("kotlin-stdlib-jdk8"))
+//    runtimeOnly("org.postgresql:postgresql")
 
-    implementation("org.flywaydb:flyway-database-postgresql:10.4.0")
+    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+
 }
 
-flyway {
-    url = "jdbc:postgresql://localhost:5432/admin"
-    user = "user"
-    password = "123"
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs += "-Xjsr305=strict"
+        jvmTarget = "17"
+    }
 }
 
-buildscript {
-    dependencies {
-        classpath("org.flywaydb:flyway-database-postgresql:10.4.0")
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("com.vaadin:vaadin-bom:24.3.3")
     }
 }

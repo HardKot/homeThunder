@@ -6,11 +6,23 @@ import com.vaadin.flow.component.formlayout.FormLayout
 import com.vaadin.flow.dom.Style
 import com.vaadin.flow.router.Route
 import com.homethunder.backend.ui.presenters.RegistrationPresenter
-
+import com.vaadin.flow.component.textfield.*
+import com.vaadin.flow.component.datepicker.DatePicker
+import com.vaadin.flow.component.select.Select
 
 @Route("/registration")
 class RegistrationView : KComposite() {
     private val presenter = RegistrationPresenter(this)
+
+    lateinit var firstnameField: TextField
+    lateinit var secondnameField: TextField
+    lateinit var patronymicField: TextField
+    lateinit var birthdayField: DatePicker
+    lateinit var genderSelector: Select<Gender>
+   
+    lateinit var emailField: EmailField
+    lateinit var passwordField: PasswordField
+    lateinit var confirmPasswordField: PasswordField
 
     private val root = ui {
         div {
@@ -47,18 +59,17 @@ class RegistrationView : KComposite() {
 
                     h3("Регистрация")
 
-                    textField("Имя")
-                    textField("Фамилия")
-                    textField("Отчество")
-                    datePicker("Дата рождения")
-                    select("Пол") {
+                    firstnameField  = textField("Имя")
+                    secondnameField = textField("Фамилия")
+                    patronymicField = textField("Отчество")
+                    birthdayField   = datePicker("Дата рождения")
+                    genderSelector  = select("Пол") {
                         setItems(Gender.Male, Gender.Famale)
-                    }
+		    }
 
-                    emailField("Электронная почта")
-
-                    passwordField("Пароль")
-                    passwordField("Подтвердите пароль")
+                    emailField           = emailField("Электронная почта")
+                    passwordField        = passwordField("Пароль")
+                    confirmPasswordField = passwordField("Подтвердите пароль")
 
                     setResponsiveSteps(FormLayout.ResponsiveStep("0", 1))
 

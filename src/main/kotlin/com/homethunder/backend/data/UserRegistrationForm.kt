@@ -4,8 +4,8 @@ import com.homethunder.backend.domain.enums.Gender
 import kotlinx.datetime.LocalDate
 
 data class UserRegistrationForm(
-    val firstName: String,
-    val lastName: String,
+    val firstname: String,
+    val lastname: String,
     val patronymic: String?,
     val birthday: LocalDate?,
     val gender: Gender?,

@@ -6,14 +6,23 @@ import kotlinx.datetime.LocalDate
 import com.homethunder.backend.ui.Model
 
 class RegistrationModel(view: KComposite) : Model(view) {
-    lateinit var firstName: String
-    lateinit var lastName: String
-    lateinit var patronymic: String
+    val firstname = view.firstnameField::value
+    val secondname = view.secondnameField::value
+    val patronymic = view.patronymicField::value
 
-    lateinit var birthday: LocalDate
-    lateinit var gender: Gender
-
-    lateinit var email: String
-    lateinit var password: String
-    lateinit var confirmPassword: String
+    val birthday = view.birthdayField::value 
+    
+    val gender = view.genderSelector::value
+    val email = view.emailField::value
+    
+    val password = view.passwordField::value
+    val confirmPassword = view.confirmPassword::value
+    
+    val isLoading = false
+    
+    fun submitForm() {
+        isLoading = true
+        val result = UserRegistrationUS().exec(this)
+        isLoading = false
+    }
 }

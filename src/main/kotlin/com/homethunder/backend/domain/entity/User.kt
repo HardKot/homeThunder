@@ -2,37 +2,29 @@ package com.homethunder.backend.domain.entity
 
 import java.util.UUID
 
-import com.homethunder.backend.domain.table.UserTable
+import com.homethunder.backend.domain.table.UsersTable
 import org.jetbrains.exposed.dao.id.EntityID
-
 
 class User(
     id: EntityID<UUID>,
-) : BaseEntity(id, UserTable) {
-    var firstname by UserTable.firstname
-    var lastname by UserTable.lastname
-    var patronymic by UserTable.patronymic
-    var gender by UserTable.gender
+) : BaseEntity(id, UsersTable) {
 
-    var birthday by UserTable.birthday
+    companion object : BaseEntityClass<User>(UsersTable)
 
-    var phone by UserTable.phone
-    var email by UserTable.email
+    var firstname by UsersTable.firstname
+    var lastname by UsersTable.lastname
+    var patronymic by UsersTable.patronymic
+    var gender by UsersTable.gender
 
-    var avatarId by UserTable.avatarId
+    var birthday by UsersTable.birthday
 
-    fun setPassword(password: String) {
-//        dao.passwordSalt = passwordService.generateSalt()
-//        dao.password = passwordService.hashPassword(password, dao.passwordSalt)
-    }
+    var email by UsersTable.email
+    var password by UsersTable.password
+    var passwordSalt by UsersTable.passwordSalt
 
-    fun setAvatar(avatar: ByteArray) {
-//        avatarId?.let { mediaContentService.removeFromDisk(it) }
-//        dao.avatarId = mediaContentService.writeToDisk(avatar)
-    }
+    var avatarId by UsersTable.avatarId
 
     fun dropAvatarId() {
-//        dao.avatarId?.let { mediaContentService.removeFromDisk(it) }
-//        dao.avatarId = null
+        avatarId = null
     }
 }

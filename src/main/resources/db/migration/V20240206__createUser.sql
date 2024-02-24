@@ -1,10 +1,10 @@
 CREATE TABLE entityTable (
     id UUID PRIMARY KEY default gen_random_uuid(),
-    createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TYPE GENDER AS ENUM ('MALE', 'FEMALE');
+CREATE TYPE GENDER AS ENUM ('Male', 'Female');
 
 CREATE TABLE users (
 
@@ -18,5 +18,9 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(255),
 
-    avatarId UUID
+
+    password bytea NOT NULL,
+    password_salt bytea NOT NULL,
+
+    avatar_id UUID
 ) INHERITS (entityTable);

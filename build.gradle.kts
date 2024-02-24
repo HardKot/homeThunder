@@ -31,7 +31,7 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    val exposedVersion = "0.46.0"
+    val exposedVersion = "0.47.0"
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -63,6 +63,7 @@ dependencies {
     implementation("io.konform:konform-jvm:0.4.0")
 
     implementation("org.postgresql:postgresql:42.7.1")
+    implementation("at.favre.lib:bcrypt:0.10.2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 

@@ -6,23 +6,28 @@ import com.vaadin.flow.component.formlayout.FormLayout
 import com.vaadin.flow.dom.Style
 import com.vaadin.flow.router.Route
 import com.homethunder.backend.ui.presenters.RegistrationPresenter
-import com.vaadin.flow.component.textfield.*
 import com.vaadin.flow.component.datepicker.DatePicker
+import com.vaadin.flow.component.textfield.*
 import com.vaadin.flow.component.select.Select
 
 @Route("/registration")
-class RegistrationView : KComposite() {
-    private val presenter = RegistrationPresenter(this)
+class RegistrationView(
+    private val presenter: RegistrationPresenter
+) : KComposite() {
 
     lateinit var firstnameField: TextField
-    lateinit var secondnameField: TextField
+    lateinit var secondmentField: TextField
     lateinit var patronymicField: TextField
     lateinit var birthdayField: DatePicker
     lateinit var genderSelector: Select<Gender>
-   
+
     lateinit var emailField: EmailField
     lateinit var passwordField: PasswordField
     lateinit var confirmPasswordField: PasswordField
+
+    init {
+        presenter.view = this
+    }
 
     private val root = ui {
         div {
@@ -60,7 +65,7 @@ class RegistrationView : KComposite() {
                     h3("Регистрация")
 
                     firstnameField  = textField("Имя")
-                    secondnameField = textField("Фамилия")
+                    secondmentField = textField("Фамилия")
                     patronymicField = textField("Отчество")
                     birthdayField   = datePicker("Дата рождения")
                     genderSelector  = select("Пол") {
@@ -75,7 +80,9 @@ class RegistrationView : KComposite() {
 
 
                     button("Зарегистрироваться") {
-                        println("test")
+                        addClickListener {
+                            presenter.submitForm()
+                        }
                     }
                 }
             }

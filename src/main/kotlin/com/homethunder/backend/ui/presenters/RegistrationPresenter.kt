@@ -3,32 +3,40 @@ package com.homethunder.backend.ui.presenters
 
 import com.homethunder.backend.data.UserRegistrationForm
 import com.homethunder.backend.ui.views.RegistrationView
-import com.homethunder.backend.useCases.UserInteractor
+import com.homethunder.backend.useCases.UserInteract
+import kotlinx.datetime.toJavaLocalDate
 import kotlinx.datetime.toKotlinLocalDate
 import org.springframework.stereotype.Component
 
 @Component
 class RegistrationPresenter(
-    private val userInteractor: UserInteractor
-) {
+    private val userInteract: UserInteract
+) : FormPresenter<UserRegistrationForm>(UserRegistrationForm::class.java, UserRegistrationForm()) {
     lateinit var view: RegistrationView
-    val form
-        get() = UserRegistrationForm(
-            firstname = view.firstnameField.value,
-            lastname = view.secondmentField.value,
-            patronymic = view.patronymicField.value,
-            birthday = view.birthdayField.value.toKotlinLocalDate(),
-            gender = view.genderSelector.value,
-            email = view.emailField.value,
-            password = view.passwordField.value,
-            confirmPassword = view.confirmPasswordField.value
-        )
 
     var isLoading = false
 
     fun submitForm() {
         isLoading = true
-        val result = userInteractor.registration(form)
+        val validateStatus = validate()
+
+        val result = userInteract.registration(form)
         isLoading = false
+    }
+
+
+    fun linkBind() {
+        bind(view.firstnameField, UserRegistrationForm::firstname)
+        bind(view.lastnameField, UserRegistrationForm::lastname)
+        bind(view.patronymicField, UserRegistrationForm::patronymic)
+
+        bind(view.genderSelector, UserRegistrationForm::gender)
+        bind(view.birthdayField, UserRegistrationForm::birthday) {
+            withConverter({ it.toKotlinLocalDate() }, { it.toJavaLocalDate() })
+        }
+
+        bind(view.emailField, UserRegistrationForm::email)
+        bind(view.passwordField, UserRegistrationForm::password)
+        bind(view.confirmPasswordField, UserRegistrationForm::confirmPassword)
     }
 }

@@ -23,3 +23,16 @@ fun ValidationBuilder<String>.equals (value: String): Constraint<String> = addCo
 ) {
     it == value
 }
+
+
+//fun <T, F> Validation<T>.validator(field: String): Validator<F> {
+//    val validate = validate(this)
+//
+//    return Validator<F> { value, context ->
+//        val result = validate(value)
+//        val errors = result.errors
+//
+//        if (errors.isEmpty()) return@Validator ValidationResult.ok()
+//        else return@Validator ValidationResult.error(errors.joinToString { it.message })
+//    }
+//}

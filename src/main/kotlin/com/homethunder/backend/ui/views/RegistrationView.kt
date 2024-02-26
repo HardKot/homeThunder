@@ -2,21 +2,25 @@ package com.homethunder.backend.ui.views
 
 import com.github.mvysny.karibudsl.v10.*
 import com.homethunder.backend.domain.enums.Gender
+import com.homethunder.backend.extensions.Year
+import com.homethunder.backend.extensions.today
 import com.vaadin.flow.component.formlayout.FormLayout
 import com.vaadin.flow.dom.Style
 import com.vaadin.flow.router.Route
 import com.homethunder.backend.ui.presenters.RegistrationPresenter
+import com.vaadin.flow.component.ItemLabelGenerator
 import com.vaadin.flow.component.datepicker.DatePicker
 import com.vaadin.flow.component.textfield.*
 import com.vaadin.flow.component.select.Select
+import kotlinx.datetime.*
 
 @Route("/registration")
 class RegistrationView(
-    private val presenter: RegistrationPresenter
-) : KComposite() {
+    private val presenter: RegistrationPresenter,
+) : FormLayout() {
 
     lateinit var firstnameField: TextField
-    lateinit var secondmentField: TextField
+    lateinit var lastnameField: TextField
     lateinit var patronymicField: TextField
     lateinit var birthdayField: DatePicker
     lateinit var genderSelector: Select<Gender>
@@ -27,9 +31,6 @@ class RegistrationView(
 
     init {
         presenter.view = this
-    }
-
-    private val root = ui {
         div {
             div {
                 style.apply {
@@ -65,12 +66,24 @@ class RegistrationView(
                     h3("Регистрация")
 
                     firstnameField  = textField("Имя")
-                    secondmentField = textField("Фамилия")
+                    lastnameField   = textField("Фамилия")
                     patronymicField = textField("Отчество")
-                    birthdayField   = datePicker("Дата рождения")
+
+                    birthdayField   = datePicker("Дата рождения") {
+                        val initDate = LocalDate.today()
+                        initialPosition = initDate.toJavaLocalDate()
+                    }
+
                     genderSelector  = select("Пол") {
+                        isEmptySelectionAllowed = true
+                        emptySelectionCaption = "Пол не выбран"
                         setItems(Gender.Male, Gender.Famale)
-		    }
+                        itemLabelGenerator = ItemLabelGenerator { when (it) {
+                            Gender.Male -> "Мужской"
+                            Gender.Famale -> "Женский"
+                            else -> "Пол не выбран"
+                        }}
+		            }
 
                     emailField           = emailField("Электронная почта")
                     passwordField        = passwordField("Пароль")
@@ -86,6 +99,7 @@ class RegistrationView(
                     }
                 }
             }
+            presenter.linkBind()
         }
     }
 }

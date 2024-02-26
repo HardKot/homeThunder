@@ -2,37 +2,36 @@ package com.homethunder.backend.useCases
 
 import com.homethunder.backend.data.UserRegistrationForm
 import com.homethunder.backend.domain.entity.User
+import com.homethunder.backend.domain.enums.Gender
 import com.homethunder.backend.services.PasswordService
 import io.konform.validation.ValidationErrors
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-class UserInteractor(
+class UserInteract(
     private val passwordService: PasswordService
 ) {
 
     @Transactional
     fun registration(form: UserRegistrationForm): Result<User> {
         try {
-            if (form.errors.isEmpty()) return Result.failure(
+            if (form.errors.isNotEmpty()) return Result.failure(
                 UserInteractorErrors.ValidationError(
                     "Error Validate",
                     form.errors
                 )
             )
-            if (form.password != form.confirmPassword) return Result.failure(UserInteractorErrors.PasswordNotMatch())
-
 
             return Result.success(User.new {
-                firstname = form.firstname
-                lastname = form.lastname
-                patronymic = form.patronymic
-                gender = form.gender
-                birthday = form.birthday
-                email = form.email
-                password = passwordService.generateSalt()
-                passwordSalt = passwordService.hashPassword(form.password, passwordSalt)
+                firstname = form.firstname!!
+                lastname = form.lastname!!
+                patronymic = form.patronymic!!
+                gender = Gender.Male
+                birthday = form.birthday!!
+                email = form.email!!
+                passwordSalt = passwordService.generateSalt()
+                password = passwordService.hashPassword(form.password!!, passwordSalt)
             })
         } catch (e: Error) {
             return Result.failure(e)

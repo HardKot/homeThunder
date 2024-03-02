@@ -18,9 +18,12 @@ class RegistrationPresenter(
 
     fun submitForm() {
         isLoading = true
-        val validateStatus = validate()
-
         val result = userInteract.registration(form)
+        if (result.isFailure) {
+            val errors = result.exceptionOrNull()
+            if (errors is UserInteract.UserInteractErrors.ValidationError)
+                validate()
+        }
         isLoading = false
     }
 

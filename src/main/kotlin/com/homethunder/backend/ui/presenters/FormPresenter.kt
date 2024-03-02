@@ -3,6 +3,7 @@ package com.homethunder.backend.ui.presenters
 import com.homethunder.backend.data.Form
 import com.vaadin.flow.component.AbstractField
 import com.vaadin.flow.data.binder.Binder
+import io.konform.validation.ValidationErrors
 import kotlin.reflect.KMutableProperty1
 
 abstract class FormPresenter<BEAN : Form<*, *>>(

@@ -9,18 +9,6 @@ import io.konform.validation.jsonschema.minLength
 import io.konform.validation.jsonschema.pattern
 import kotlinx.datetime.LocalDate
 
-
-interface IUserRegistrationForm {
-    var firstname: String?
-    var lastname: String?
-    var patronymic: String?
-    var birthday: LocalDate?
-    var gender: Gender?
-    var email: String?
-    var password: String?
-    var confirmPassword: String?
-}
-
 data class UserRegistrationForm(
     override var firstname: String?,
     override var lastname: String?,
@@ -41,8 +29,8 @@ data class UserRegistrationForm(
             UserRegistrationForm::firstname -> firstname = value as String
             UserRegistrationForm::lastname -> lastname = value as String
             UserRegistrationForm::patronymic -> patronymic = value as String
-            UserRegistrationForm::birthday -> birthday = value as LocalDate
-            UserRegistrationForm::gender -> gender = value as Gender
+            UserRegistrationForm::birthday -> birthday = value as LocalDate?
+            UserRegistrationForm::gender -> gender = value as Gender?
             UserRegistrationForm::email -> email = value as String
             UserRegistrationForm::password -> password = value as String
             UserRegistrationForm::confirmPassword -> confirmPassword = value as String
@@ -57,21 +45,23 @@ data class UserRegistrationForm(
         UserRegistrationForm::patronymic ifPresent {}
 
         UserRegistrationForm::email required {
-            pattern("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}\$".toRegex())
+            pattern("^[a-zA-Z\\d-.]+@([a-zA-Z\\d-]+\\.)+[a-zA-Z\\d-]{2,4}\$".toRegex()) hint "Некорректная почта, попробуйте другую"
         }
 
+        UserRegistrationForm::gender ifPresent {}
+
         UserRegistrationForm::birthday ifPresent {
-            before(LocalDate.today())
+            before(LocalDate.today()) hint "Не корректно указан день рождения"
         }
 
         UserRegistrationForm::password required {
-            minLength(8)
-            maxLength(100)
-            pattern("^[a-zA-Z\\d%*()?@#\$~{}]+$".toRegex())
+            minLength(8) hint "Строка должна содержать не менее 8 символов"
+            maxLength(100) hint "Строка должна содержать не более 100 символов"
+            pattern("^[a-zA-Z\\d%*()?@#\$~{}]+$".toRegex()) hint "Пароль содержит недопустимые символы. Допустимые символы: латинские буквы, цифры, %, *, ?, @, #, $, ~, {, }"
         }
 
         UserRegistrationForm::confirmPassword required {
-            equals(UserRegistrationForm::password)
+//            equals(UserRegistrationForm::password) hint "Пароли не совпадают"
         }
     }
 }

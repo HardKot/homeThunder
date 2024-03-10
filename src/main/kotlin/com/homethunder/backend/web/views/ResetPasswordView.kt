@@ -1,9 +1,9 @@
-package com.homethunder.backend.ui.views
+package com.homethunder.backend.web.views
 
 import com.github.mvysny.karibudsl.v10.button
 import com.github.mvysny.karibudsl.v10.passwordField
 import com.github.mvysny.karibudsl.v10.verticalLayout
-import com.homethunder.backend.ui.presenters.ResetPasswordPresenter
+import com.homethunder.backend.web.presenters.ResetPasswordPresenter
 import com.vaadin.flow.component.formlayout.FormLayout
 import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.router.BeforeEvent
@@ -38,6 +38,6 @@ class ResetPasswordView(
     }
 
     override fun setParameter(event: BeforeEvent?, parameter: String) {
-        presenter.form.droppedToken = parameter
+//        presenter.form.droppedToken = parameter
     }
 }

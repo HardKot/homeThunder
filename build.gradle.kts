@@ -21,17 +21,10 @@ java {
 
 repositories {
     mavenCentral()
-//    maven { url = "https://maven.vaadin.com/vaadin-addons" }
 }
-//
-//vaadin {
-//    optimizeBundle = false
-//}
-
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    val exposedVersion = "0.47.0"
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -44,23 +37,13 @@ dependencies {
 
 //    implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
-
-    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-crypt:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
-
-    implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-json:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-spring-boot-starter:$exposedVersion")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     implementation("org.flywaydb:flyway-core")
 
 
     implementation("com.vaadin:vaadin-spring-boot-starter")
     compileOnly("org.springframework.boot:spring-boot-devtools")
-    implementation("io.konform:konform-jvm:0.4.0")
 
     implementation("org.postgresql:postgresql:42.7.1")
     implementation("at.favre.lib:bcrypt:0.10.2")
@@ -71,9 +54,6 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.5")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-
-//    implementation(kotlin("kotlin-stdlib-jdk8"))
-//    runtimeOnly("org.postgresql:postgresql")
 
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 

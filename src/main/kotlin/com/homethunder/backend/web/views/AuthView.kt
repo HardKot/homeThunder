@@ -1,8 +1,8 @@
-package com.homethunder.backend.ui.views
+package com.homethunder.backend.web.views
 
 import com.github.mvysny.karibudsl.v10.*
 import com.github.mvysny.kaributools.navigateTo
-import com.homethunder.backend.ui.presenters.AuthPresenter
+import com.homethunder.backend.web.presenters.AuthPresenter
 import com.vaadin.flow.component.formlayout.FormLayout
 import com.vaadin.flow.component.textfield.EmailField
 import com.vaadin.flow.component.textfield.PasswordField

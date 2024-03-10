@@ -1,30 +1,39 @@
 package com.homethunder.backend.domain.entity
 
+import com.homethunder.backend.domain.enums.Gender
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.Table
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.UUID
 
-import com.homethunder.backend.domain.table.UsersTable
-import org.jetbrains.exposed.dao.id.EntityID
+@Entity
+@Table(name = "users")
+data class User (
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    var id: UUID,
 
-class User(
-    id: EntityID<UUID>,
-) : BaseEntity(id, UsersTable) {
+    var firstname: String,
+    var lastname: String,
+    var patronymic: String?,
 
-    companion object : BaseEntityClass<User>(UsersTable)
+    var gender: Gender = Gender.Unknown,
 
-    var firstname by UsersTable.firstname
-    var lastname by UsersTable.lastname
-    var patronymic by UsersTable.patronymic
-    var gender by UsersTable.gender
+    var birthday: LocalDate,
+    var email: String,
+    @Column(name = "avatar_id") var avatarId: UUID?,
 
-    var birthday by UsersTable.birthday
+    var password: ByteArray,
 
-    var email by UsersTable.email
-    var password by UsersTable.password
-    var passwordSalt by UsersTable.passwordSalt
-
-    var avatarId by UsersTable.avatarId
-
-    fun dropAvatarId() {
+    @Column(name = "updated_at") var updateAt: LocalDateTime,
+    @Column(name = "created_at") var createAt: LocalDateTime,
+) {
+    fun dropAvatar() {
         avatarId = null
     }
 }

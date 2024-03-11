@@ -6,6 +6,8 @@ build/
 !**/src/test/**/build/
 node_modules
 .next
+frontend/generated/
+
 
 ### STS ###
 .apt_generated

@@ -7,23 +7,31 @@ import com.vaadin.flow.dom.Style
 import com.vaadin.flow.router.Route
 import com.homethunder.backend.web.presenters.RegistrationPresenter
 import com.vaadin.flow.component.ItemLabelGenerator
+import com.vaadin.flow.component.avatar.Avatar
+import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.datepicker.DatePicker
+import com.vaadin.flow.component.orderedlayout.FlexComponent
+import com.vaadin.flow.component.progressbar.ProgressBar
 import com.vaadin.flow.component.textfield.*
 import com.vaadin.flow.component.select.Select
+import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
+import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems
+import com.vaadin.flow.theme.lumo.LumoUtility.Gap
 import com.vaadin.flow.theme.material.Material
+import java.time.LocalDate
 
 
 @Route("/registration")
-@Theme(value = Lumo.LIGHT)
+@PageTitle("Регистрация")
 class RegistrationView(
     private val presenter: RegistrationPresenter,
 ) : FormLayout() {
-
     lateinit var firstnameField: TextField
     lateinit var lastnameField: TextField
     lateinit var patronymicField: TextField
+
     lateinit var birthdayField: DatePicker
     lateinit var genderSelector: Select<Gender>
 
@@ -31,49 +39,69 @@ class RegistrationView(
     lateinit var passwordField: PasswordField
     lateinit var confirmPasswordField: PasswordField
 
+    lateinit var progressBarView: ProgressBar
+    lateinit var submitButton: Button
 
     init {
         verticalLayout {
+            progressBarView = progressBar {  }
+
+            width = "100%"
+
             style.apply {
-                setJustifyContent(Style.JustifyContent.CENTER)
-                setAlignItems(Style.AlignItems.CENTER)
+                setFlexGrow(1.0)
+                setJustifyContent(Style.JustifyContent.START)
+                alignItems = FlexComponent.Alignment.START
             }
 
             h3("Регистрация")
 
-            firstnameField  = textField("Имя")
-            lastnameField   = textField("Фамилия")
-            patronymicField = textField("Отчество")
+            h5("Персональная информация")
 
-            birthdayField   = datePicker("Дата рождения") {
+            formLayout {
+                width = "100%"
+                maxWidth = "800px"
+                height = "min-content"
 
+                firstnameField  = textField("Имя")
+                lastnameField   = textField("Фамилия")
+                patronymicField = textField("Отчество")
+
+                birthdayField   = datePicker("Дата рождения") {
+                    value = LocalDate.now()
+                }
+
+                genderSelector  = select("Пол") {
+                    setItems(Gender.Unknown, Gender.Male, Gender.Famale)
+                    itemLabelGenerator = ItemLabelGenerator { when (it) {
+                        Gender.Male -> "Мужской"
+                        Gender.Famale -> "Женский"
+                        else -> "Пол не выбран"
+                    }}
+                    value = Gender.Unknown
+                }
+
+                emailField = emailField("Электронная почта")
             }
 
-            genderSelector  = select("Пол") {
-                isEmptySelectionAllowed = true
-                emptySelectionCaption = "Пол не выбран"
-                setItems(Gender.Male, Gender.Famale)
-                itemLabelGenerator = ItemLabelGenerator { when (it) {
-                    Gender.Male -> "Мужской"
-                    Gender.Famale -> "Женский"
-                    else -> emptySelectionCaption
-                }}
+            h5("Безопасность")
+
+            formLayout {
+                width = "100%"
+                maxWidth = "800px"
+                height = "min-content"
+
+                passwordField        = passwordField("Пароль")
+                confirmPasswordField = passwordField("Подтвердите пароль")
             }
 
-            emailField           = emailField("Электронная почта")
-            passwordField        = passwordField("Пароль")
-            confirmPasswordField = passwordField("Подтвердите пароль")
-
-            setResponsiveSteps(FormLayout.ResponsiveStep("0", 1))
-
-
-            button("Зарегистрироваться") {
+            submitButton = button("Зарегистрироваться") {
                 addClickListener {
                     presenter.submitForm()
                 }
             }
         }
 
-//        presenter.setView(this)
+        presenter.setView(this)
     }
 }

@@ -1,12 +1,7 @@
 package com.homethunder.backend.domain.entity
 
 import com.homethunder.backend.domain.enums.Gender
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
@@ -16,24 +11,21 @@ import java.util.UUID
 data class User (
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    var id: UUID,
+    var id: UUID = UUID.randomUUID(),
 
     var firstname: String,
     var lastname: String,
-    var patronymic: String?,
+    var patronymic: String? = null,
 
+    @Enumerated(EnumType.STRING)
     var gender: Gender = Gender.Unknown,
 
     var birthday: LocalDate,
     var email: String,
-    @Column(name = "avatar_id") var avatarId: UUID?,
 
-    var password: ByteArray,
+    var password: String,
 
-    @Column(name = "updated_at") var updateAt: LocalDateTime,
-    @Column(name = "created_at") var createAt: LocalDateTime,
+    @Column(name = "updated_at") var updateAt: LocalDateTime = LocalDateTime.now(),
+    @Column(name = "created_at") var createAt: LocalDateTime = LocalDateTime.now(),
 ) {
-    fun dropAvatar() {
-        avatarId = null
-    }
 }

@@ -21,6 +21,12 @@ java {
 
 repositories {
     mavenCentral()
+    maven("https://maven.vaadin.com/vaadin-addons")
+}
+
+vaadin {
+    optimizeBundle = false
+    requireHomeNodeExec = true
 }
 
 dependencies {
@@ -33,7 +39,7 @@ dependencies {
     implementation("com.github.mvysny.karibudsl:karibu-dsl:2.1.2")
     api("com.github.mvysny.karibu-tools:karibu-tools:0.19")
 
-    implementation("com.vaadin:vaadin-core:24.3.3")
+    implementation("com.vaadin:vaadin-core:24.3.6")
 
 //    implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

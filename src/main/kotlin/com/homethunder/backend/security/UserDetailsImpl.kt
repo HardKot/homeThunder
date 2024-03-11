@@ -7,14 +7,14 @@ import java.util.UUID
 class UserDetailsImpl(
     var uid: UUID,
     private var email: String,
-    private var password: ByteArray,
+    private var password: String,
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         TODO("Not yet implemented")
     }
 
-    override fun getPassword(): String = password.toString()
+    override fun getPassword(): String = password
 
 
     override fun getUsername(): String = email

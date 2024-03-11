@@ -4,6 +4,7 @@ package com.homethunder.backend.web.presenters
 import com.homethunder.backend.domain.forms.UserRegistrationForm
 import com.homethunder.backend.domain.interacts.UserInteract
 import com.homethunder.backend.web.views.RegistrationView
+import com.vaadin.flow.data.binder.BeanValidationBinder
 import com.vaadin.flow.data.binder.Binder
 
 import org.springframework.stereotype.Component
@@ -12,21 +13,21 @@ import org.springframework.stereotype.Component
 class RegistrationPresenter(
     private val userInteract: UserInteract
 )  {
-    private val form = UserRegistrationForm()
-    private val binder = Binder<UserRegistrationForm>()
+    private val binder = BeanValidationBinder(UserRegistrationForm::class.java)
     private lateinit var view: RegistrationView
+    private val form = UserRegistrationForm()
+    fun bind() {
+        binder.bindInstanceFields(this)
+    }
 
-    var isLoading = false
+
 
     fun submitForm() {
-        isLoading = true
-        val result = userInteract.registration(form)
-//        if (result.isFailure) {
-//            val errors = result.exceptionOrNull()
-//            if (errors is UserInteract.UserInteractErrors.ValidationError)
-//        }
-        isLoading = false
+        binder.writeBean(form)
+//        startLoading()
+        userInteract.registration(form)
     }
+
 
     fun setView(view: RegistrationView) {
         this.view = view
@@ -42,7 +43,23 @@ class RegistrationPresenter(
             bind(view.passwordField, UserRegistrationForm::password.name)
             bind(view.confirmPasswordField, UserRegistrationForm::confirmPassword.name)
         }
-
-
     }
+
+    private fun startLoading() = changeLoading(true)
+
+    private fun stopLoading() = changeLoading(false)
+
+    private fun changeLoading(value: Boolean) {
+        view.progressBarView.isIndeterminate = value
+        view.firstnameField.isEnabled = !value
+        view.lastnameField.isEnabled = !value
+        view.patronymicField.isEnabled = !value
+        view.genderSelector.isEnabled = !value
+        view.birthdayField.isEnabled = !value
+        view.emailField.isEnabled = !value
+        view.passwordField.isEnabled = !value
+        view.confirmPasswordField.isEnabled = !value
+        view.submitButton.isEnabled = !value
+    }
+
 }

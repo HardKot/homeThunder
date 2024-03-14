@@ -5,9 +5,11 @@ import com.homethunder.backend.web.presenters.DropPasswordPresenter
 import com.vaadin.flow.component.formlayout.FormLayout
 import com.vaadin.flow.component.textfield.EmailField
 import com.vaadin.flow.router.Route
+import com.vaadin.flow.server.auth.AnonymousAllowed
 import jakarta.annotation.PostConstruct
 
 @Route("/dropPassword")
+@AnonymousAllowed
 class DropPasswordView(
     private val presenter: DropPasswordPresenter
 ) : FormLayout() {

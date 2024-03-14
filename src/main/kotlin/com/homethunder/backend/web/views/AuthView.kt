@@ -3,48 +3,66 @@ package com.homethunder.backend.web.views
 import com.github.mvysny.karibudsl.v10.*
 import com.github.mvysny.kaributools.navigateTo
 import com.homethunder.backend.web.presenters.AuthPresenter
+import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.formlayout.FormLayout
+import com.vaadin.flow.component.html.Div
+import com.vaadin.flow.component.login.LoginOverlay.LoginOverlayFooter
+import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.textfield.EmailField
 import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.router.Route
+import com.vaadin.flow.server.auth.AnonymousAllowed
 import jakarta.annotation.PostConstruct
 
 
 @Route("/auth")
+@AnonymousAllowed
 class AuthView(
     private val presenter: AuthPresenter
-) : FormLayout() {
+) : KComposite() {
     lateinit var emailField: EmailField
     lateinit var passwordField: PasswordField
 
     @PostConstruct
-    fun postConstruct () {
+    fun postConstruct() {
         presenter.linkBind()
     }
 
     init {
         presenter.view = this
-        verticalLayout {
-            h3("Авторизация")
+        ui {
+            div("login-rich-content") {
+                verticalLayout {
+                    alignItems = FlexComponent.Alignment.CENTER
+                    justifyContentMode = FlexComponent.JustifyContentMode.CENTER
 
-            emailField           = emailField("Электронная почта")
-            passwordField        = passwordField("Пароль")
+                    formLayout {
+                        h3("Авторизация")
 
-            button("Авторизация") {
-                addClickListener {
-                    presenter.submitForm()
-                }
-            }
+                        emailField = emailField("Электронная почта")
+                        passwordField = passwordField("Пароль")
 
-            button("Регистрация") {
-                addClickListener {
-                    navigateTo("/registration")
-                }
-            }
+                        button("Авторизация") {
+                            addThemeVariants(ButtonVariant.LUMO_PRIMARY)
+                            addClickListener {
+                                presenter.submitForm()
+                            }
+                        }
 
-            button("Забыли пароль") {
-                addClickListener {
-                    navigateTo("/dropPassword")
+                        button("Регистрация") {
+                            addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_SMALL)
+                            addClickListener {
+                                navigateTo("/registration")
+                            }
+                        }
+
+                        button("Забыли пароль") {
+                            addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_SMALL)
+                            addClickListener {
+                                navigateTo("/dropPassword")
+                            }
+                        }
+                    }
                 }
             }
         }

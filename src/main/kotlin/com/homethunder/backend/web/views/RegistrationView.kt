@@ -7,7 +7,6 @@ import com.vaadin.flow.dom.Style
 import com.vaadin.flow.router.Route
 import com.homethunder.backend.web.presenters.RegistrationPresenter
 import com.vaadin.flow.component.ItemLabelGenerator
-import com.vaadin.flow.component.avatar.Avatar
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.datepicker.DatePicker
 import com.vaadin.flow.component.orderedlayout.FlexComponent
@@ -15,16 +14,13 @@ import com.vaadin.flow.component.progressbar.ProgressBar
 import com.vaadin.flow.component.textfield.*
 import com.vaadin.flow.component.select.Select
 import com.vaadin.flow.router.PageTitle
-import com.vaadin.flow.theme.Theme
-import com.vaadin.flow.theme.lumo.Lumo
-import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems
-import com.vaadin.flow.theme.lumo.LumoUtility.Gap
-import com.vaadin.flow.theme.material.Material
+import com.vaadin.flow.server.auth.AnonymousAllowed
 import java.time.LocalDate
 
 
 @Route("/registration")
 @PageTitle("Регистрация")
+@AnonymousAllowed
 class RegistrationView(
     private val presenter: RegistrationPresenter,
 ) : FormLayout() {

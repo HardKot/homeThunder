@@ -8,7 +8,7 @@
 }
 
 .login-rich-content vaadin-vertical-layout {
-    max-width: 500px;
+    max-width: 700px;
     height: 100%;
     display: flex;
     align-items: center;
@@ -17,6 +17,11 @@
     backdrop-filter: blur(16px);
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 0px 8px 8px 0px;
+}
+
+.login-rich-content vaadin-form-layout {
+    max-width: 400px;
+    align-self: center;
 }
 
 

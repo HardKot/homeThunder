@@ -23,4 +23,8 @@ class AuthPresenter(
     fun linkBind() {
 
     }
+
+    fun dropPassword() {
+
+    }
 }

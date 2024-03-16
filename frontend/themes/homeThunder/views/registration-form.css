@@ -1,0 +1,9 @@
+.registration-form .horizontal-form {
+    display: flex;
+}
+
+.registration-form .horizontal-form vaadin-select,
+.registration-form .horizontal-form vaadin-date-picker {
+    flex: 1
+}
+

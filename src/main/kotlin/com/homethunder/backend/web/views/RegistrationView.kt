@@ -11,6 +11,7 @@ import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.datepicker.DatePicker
 import com.vaadin.flow.component.orderedlayout.FlexComponent
+import com.vaadin.flow.component.orderedlayout.FlexLayout
 import com.vaadin.flow.component.progressbar.ProgressBar
 import com.vaadin.flow.component.textfield.*
 import com.vaadin.flow.component.select.Select
@@ -46,10 +47,14 @@ class RegistrationView(
                     alignItems = FlexComponent.Alignment.CENTER
                     justifyContentMode = FlexComponent.JustifyContentMode.CENTER
 
-                    formLayout {
+                    formLayout("registration-form") {
                         h3("Регистрация")
 
-                        h5("Персональная информация")
+                        h5("Персональная информация") {
+                            style.apply {
+                                setMarginTop("16px")
+                            }
+                        }
 
                         width = "100%"
                         maxWidth = "800px"
@@ -59,25 +64,41 @@ class RegistrationView(
                         lastnameField = textField("Фамилия")
                         patronymicField = textField("Отчество")
 
-                        birthdayField = datePicker("Дата рождения") {
-                            value = LocalDate.now()
+                        horizontalLayout(classNames = "horizontal-form") {
+                            justifyContentMode = FlexComponent.JustifyContentMode.BETWEEN
+                            alignItems = FlexComponent.Alignment.START
+
+                            birthdayField = datePicker("Дата рождения") {
+                                value = LocalDate.now().minusYears(16L)
+                            }
+
+                            genderSelector = select("Пол") {
+
+                                setItems(Gender.Unknown, Gender.Male, Gender.Famale)
+                                itemLabelGenerator = ItemLabelGenerator {
+                                    when (it) {
+                                        Gender.Male -> "Мужской"
+                                        Gender.Famale -> "Женский"
+                                        else -> "Пол не выбран"
+                                    }
+                                }
+                                value = Gender.Unknown
+                            }
                         }
 
-                        genderSelector = select("Пол") {
-                            setItems(Gender.Unknown, Gender.Male, Gender.Famale)
-                            itemLabelGenerator = ItemLabelGenerator {
-                                when (it) {
-                                    Gender.Male -> "Мужской"
-                                    Gender.Famale -> "Женский"
-                                    else -> "Пол не выбран"
-                                }
+                        h5("Контактная информация") {
+                            style.apply {
+                                setMarginTop("16px")
                             }
-                            value = Gender.Unknown
                         }
 
                         emailField = emailField("Электронная почта")
 
-                        h5("Безопасность")
+                        h5("Безопасность") {
+                            style.apply {
+                                setMarginTop("16px")
+                            }
+                        }
 
                         passwordField = passwordField("Пароль")
                         confirmPasswordField = passwordField("Подтвердите пароль")

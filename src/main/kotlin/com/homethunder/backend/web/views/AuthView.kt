@@ -4,12 +4,10 @@ import com.github.mvysny.karibudsl.v10.*
 import com.github.mvysny.kaributools.navigateTo
 import com.homethunder.backend.web.presenters.AuthPresenter
 import com.vaadin.flow.component.button.ButtonVariant
-import com.vaadin.flow.component.formlayout.FormLayout
-import com.vaadin.flow.component.html.Div
-import com.vaadin.flow.component.login.LoginOverlay.LoginOverlayFooter
 import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.textfield.EmailField
 import com.vaadin.flow.component.textfield.PasswordField
+import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.server.auth.AnonymousAllowed
 import jakarta.annotation.PostConstruct
@@ -17,6 +15,7 @@ import jakarta.annotation.PostConstruct
 
 @Route("/auth")
 @AnonymousAllowed
+@PageTitle("Авторизация")
 class AuthView(
     private val presenter: AuthPresenter
 ) : KComposite() {
@@ -48,19 +47,19 @@ class AuthView(
                                 presenter.submitForm()
                             }
                         }
+                    }
 
-                        button("Регистрация") {
-                            addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_SMALL)
-                            addClickListener {
-                                navigateTo("/registration")
-                            }
+                    button("Регистрация") {
+                        addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_SMALL)
+                        addClickListener {
+                            navigateTo("/registration")
                         }
+                    }
 
-                        button("Забыли пароль") {
-                            addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_SMALL)
-                            addClickListener {
-                                navigateTo("/dropPassword")
-                            }
+                    button("Забыли пароль") {
+                        addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_SMALL)
+                        addClickListener {
+                            navigateTo("/dropPassword")
                         }
                     }
                 }

@@ -1,21 +1,25 @@
 package com.homethunder.backend.web.presenters
 
 
+import com.github.mvysny.kaributools.navigateTo
 import com.homethunder.backend.domain.forms.UserRegistrationForm
 import com.homethunder.backend.domain.interacts.UserInteract
+import com.homethunder.backend.security.SecurityService
 import com.homethunder.backend.web.views.RegistrationView
 import com.vaadin.flow.data.binder.BeanValidationBinder
-import com.vaadin.flow.data.binder.Binder
 
 import org.springframework.stereotype.Component
 
+
 @Component
 class RegistrationPresenter(
-    private val userInteract: UserInteract
+    private val userInteract: UserInteract,
+    private val securityService: SecurityService,
 )  {
     private val binder = BeanValidationBinder(UserRegistrationForm::class.java)
     private lateinit var view: RegistrationView
     private val form = UserRegistrationForm()
+
     fun bind() {
         binder.bindInstanceFields(this)
     }
@@ -23,9 +27,15 @@ class RegistrationPresenter(
 
 
     fun submitForm() {
+        startLoading()
         binder.writeBean(form)
-//        startLoading()
-        userInteract.registration(form)
+        val result = userInteract.registration(form)
+        if (result.isSuccess) {
+            securityService.authenticate(form.email!!, form.password!!)
+        }
+        stopLoading()
+
+        navigateTo("/")
     }
 
 

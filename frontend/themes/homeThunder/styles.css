@@ -1,6 +1,7 @@
 @import url('./main-layout.css');
 @import url('./views/login-rich-content.css');
 @import url('./views/registration-form.css');
+@import url('./views/scroller-app-menu.css');
 @import url('./views/my-view-view.css');    html {
       --lumo-shade-5pct: rgba(33, 33, 33, 0.05);
       --lumo-shade-10pct: rgba(33, 33, 33, 0.1);

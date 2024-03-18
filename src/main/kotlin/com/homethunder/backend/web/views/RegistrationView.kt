@@ -12,6 +12,7 @@ import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.datepicker.DatePicker
 import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.orderedlayout.FlexLayout
+import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.component.progressbar.ProgressBar
 import com.vaadin.flow.component.textfield.*
 import com.vaadin.flow.component.select.Select
@@ -46,6 +47,10 @@ class RegistrationView(
                 verticalLayout {
                     alignItems = FlexComponent.Alignment.CENTER
                     justifyContentMode = FlexComponent.JustifyContentMode.CENTER
+
+                    progressBarView = progressBar {
+                        isIndeterminate = false
+                    }
 
                     formLayout("registration-form") {
                         h3("Регистрация")

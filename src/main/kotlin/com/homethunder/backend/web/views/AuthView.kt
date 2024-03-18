@@ -1,16 +1,17 @@
 package com.homethunder.backend.web.views
 
 import com.github.mvysny.karibudsl.v10.*
-import com.github.mvysny.kaributools.addThemeVariantsCompat
 import com.github.mvysny.kaributools.navigateTo
 import com.homethunder.backend.web.presenters.AuthPresenter
 import com.vaadin.flow.component.HasText
+import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.checkbox.Checkbox
 import com.vaadin.flow.component.dialog.Dialog
 import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.component.notification.NotificationVariant
 import com.vaadin.flow.component.orderedlayout.FlexComponent
+import com.vaadin.flow.component.progressbar.ProgressBar
 import com.vaadin.flow.component.textfield.EmailField
 import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.router.PageTitle
@@ -31,15 +32,17 @@ class AuthView(
 
     lateinit var emailField: EmailField
     lateinit var passwordField: PasswordField
-    lateinit var remberMeField: Checkbox
+    lateinit var rememberMeField: Checkbox
+
+    lateinit var submitButton: Button
+    lateinit var progressBarView: ProgressBar
 
     @PostConstruct
     fun postConstruct() {
-        presenter.linkBind()
+        presenter.setView(this)
     }
 
     init {
-        presenter.view = this
         dropPasswordModalView.apply {
             isModal = true
             headerTitle = "Сбросить пароль"
@@ -83,6 +86,11 @@ class AuthView(
                     alignItems = FlexComponent.Alignment.CENTER
                     justifyContentMode = FlexComponent.JustifyContentMode.CENTER
 
+                    progressBarView = progressBar {
+                        isIndeterminate = false
+                    }
+
+
                     formLayout {
                         h3("Авторизация")
 
@@ -93,7 +101,7 @@ class AuthView(
                             alignItems = FlexComponent.Alignment.CENTER
                             justifyContentMode = FlexComponent.JustifyContentMode.BETWEEN
 
-                            remberMeField = checkBox("Запомнить меня")
+                            rememberMeField = checkBox("Запомнить меня")
 
                             button("Забыли пароль") {
                                 addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_SMALL)
@@ -103,7 +111,7 @@ class AuthView(
                             }
                         }
 
-                        button("Авторизация") {
+                        submitButton = button("Авторизация") {
                             style.setMarginTop("24px")
                             addThemeVariants(ButtonVariant.LUMO_PRIMARY)
                             addClickListener {

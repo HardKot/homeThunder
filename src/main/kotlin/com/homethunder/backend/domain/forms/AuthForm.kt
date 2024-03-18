@@ -7,4 +7,6 @@ class AuthForm {
     var login: String? = null
     @NotNull
     var password: String? = null
+    @NotNull
+    var rememberMe: Boolean? = false
 }

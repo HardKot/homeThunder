@@ -40,6 +40,10 @@ dependencies {
     api("com.github.mvysny.karibu-tools:karibu-tools:0.19")
 
     implementation("com.vaadin:vaadin-core:24.3.6")
+//    implementation("com.github.appreciated:card:2.0.0")
+
+
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1-Beta")
 
 //    implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
